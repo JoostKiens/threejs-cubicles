@@ -1,0 +1,18 @@
+{
+  "name": "cubicles",
+  "version": "0.0.1",
+  "description": "THREEjs generated 3D grid with cubes",
+  "main": "index.js",
+  "author": "Joost Kiens",
+  "license": "MIT",
+  "dependencies": {
+    "canvas-sketch": "^0.2.0",
+    "canvas-sketch-util": "^1.6.0",
+    "dat.gui": "^0.7.4",
+    "eases": "^1.0.8",
+    "eslint": "^5.12.0",
+    "lodash": "^4.17.11",
+    "nice-color-palettes": "^2.0.0",
+    "three": "^0.100.0"
+  }
+}
