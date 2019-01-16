@@ -15,7 +15,8 @@ const settings = {
   animate: true,
   context: 'webgl',
   duration: 2.5,
-  attributes: { antialias: true }
+  attributes: { antialias: true },
+  canvas: document.querySelector('#app')
 }
 
 function CFG() {
@@ -28,7 +29,7 @@ function CFG() {
   this.maxPointIncrease = 0.7
   this.scaleRandomness = 0.3
   this.delayRandomness = 0.1
-  this.zoom = 6
+  this.zoom = 1
   this.cameraX = 6
   this.cameraY = 6
   this.cameraZ = 6
@@ -137,10 +138,8 @@ const handleResize = (renderer, camera, cfg, { pixelRatio, viewportWidth, viewpo
   renderer.setSize(viewportWidth, viewportHeight)
   const aspect = viewportWidth / viewportHeight
 
-  // Ortho zoom
   const zoom = 6
 
-  // Bounds
   camera.left = -zoom * aspect
   camera.right = zoom * aspect
   camera.top = zoom
