@@ -10,7 +10,7 @@ const THREE = global.THREE = require('three')
 require('three/examples/js/controls/OrbitControls')
 
 const settings = {
-  dimensions: [768, 768],
+  dimensions: [600, 600],
   fps: 30,
   animate: true,
   context: 'webgl',
@@ -43,7 +43,10 @@ const sketch = ({ context, canvas }) => {
 
   const camera = new THREE.OrthographicCamera()
   const controls = new THREE.OrbitControls(camera, canvas)
-  const gui = new dat.GUI({ closed: true })
+  const gui = new dat.GUI({ closed: false })
+  if (cfg.remember) {
+    gui.remember(cfg)
+  }
   const f1 = gui.addFolder('Grid')
 
   f1.add(cfg, 'maxGridScale', 0, 1)
