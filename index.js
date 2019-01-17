@@ -43,12 +43,14 @@ const sketch = ({ context, canvas }) => {
 
   const camera = new THREE.OrthographicCamera()
   const controls = new THREE.OrbitControls(camera, canvas)
-  const gui = new dat.GUI({ closed: false })
+  const gui = new dat.GUI()
+  gui.closed = true
   if (cfg.remember) {
+    gui.useLocalStorage = true
     gui.remember(cfg)
   }
+  
   const f1 = gui.addFolder('Grid')
-
   f1.add(cfg, 'maxGridScale', 0, 1)
   f1.add(cfg, 'gridGutter', 0, 60)
   const f2 = gui.addFolder('Duration')
