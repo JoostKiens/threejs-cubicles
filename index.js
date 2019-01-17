@@ -70,7 +70,7 @@ const sketch = ({ context, canvas }) => {
     updateCamera('zoom', cfg.zoom)
   }
 
-  const gridPoints = createGrid([cfg.cubesPerSide, cfg.cubesPerSide, cfg.cubesPerSide])
+  const gridPoints = createUVWGrid([cfg.cubesPerSide, cfg.cubesPerSide, cfg.cubesPerSide])
   const scene = new THREE.Scene()
   const grid = new THREE.Group()
   const box = new THREE.BoxGeometry(0.1, 0.1, 0.1)
@@ -161,21 +161,17 @@ const handleUnload = (renderer, controls) => {
   renderer.dispose()
 }
 
-const createGrid = (([cx, cy, cz]) => {
-  const res = []
+const createUVWGrid = ([cx, cy, cz]) => {
+  return times(cx).map(x => times(cy).map((y) => times(cz).map(z =>
+    new THREE.Vector3(
+      cx <= 1 ? 0.5 : x / (cx - 1), 
+      cy <= 1 ? 0.5 : y / (cy - 1),
+      cz <= 1 ? 0.5 : z / (cz - 1)
+    )
+  ))).flat(2)
+}
 
-  for (let x = 0; x < cx; x++) {
-    for (let y = 0; y < cy; y++) {
-      for (let z = 0; z < cz; z++) {
-        const u = cx <= 1 ? 0.5 : x / (cx - 1)
-        const v = cy <= 1 ? 0.5 : y / (cy - 1)
-        const w = cz <= 1 ? 0.5 : z / (cz - 1)
-        res.push(new THREE.Vector3(u, v, w))
-      }
-    }
-  }
-  return res
-})
+const times = (n) => Array.from(new Array(n)).map((_, i) => i)
 
 const transpose = (t, delay, duration) => {
   if (t - delay <= 0) return 0
