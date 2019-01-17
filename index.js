@@ -61,7 +61,6 @@ const sketch = ({ context, canvas }) => {
 
   if (cfg.remember) {
     controls.addEventListener('change', evt => updateConfig(evt, cfg))
-    gui.remember(cfg)
     const f4 = gui.addFolder('Controls')
     f4.add(cfg, 'zoom', 0, 3).listen().onChange(val => updateCamera('zoom', val))
     f4.add(cfg, 'cameraX', -60, 60).listen().onChange(val => updateCamera('position.x', val))

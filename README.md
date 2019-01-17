@@ -17,7 +17,7 @@ Project uses [canvas-sketch](https://github.com/mattdesl/canvas-sketch) by Matt 
 
 ```
 yarn
-canvas-sketch index.js --output=output/
+canvas-sketch index.js --output=output/ --html=index.html
 ```
 
 
