@@ -5,6 +5,10 @@
   "main": "index.js",
   "author": "Joost Kiens",
   "license": "MIT",
+  "scripts": {
+    "start": "canvas-sketch index.js --output=output/ --html=index.html",
+    "dist": "canvas-sketch index.js --html=index.html --dir dist --build --no-compress; cp index.css dist/index.css"
+  },
   "dependencies": {
     "canvas-sketch": "^0.2.0",
     "canvas-sketch-util": "^1.6.0",
