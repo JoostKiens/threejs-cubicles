@@ -8,7 +8,8 @@
   "scripts": {
     "start": "canvas-sketch index.js --html=index.html",
     "start-for-save": "NODE_ENV=save canvas-sketch index.js --output=output/ --html=index.html",
-    "dist": "canvas-sketch index.js --html=index.html --dir dist --build --no-compress; cp index.css dist/index.css"
+    "dist": "canvas-sketch index.js --html=index.html --dir dist --build --no-compress; cp index.css dist/index.css",
+    "dist-for-save": "NODE_ENV=save canvas-sketch index.js --html=index.html --dir dist --build --no-compress; cp index.css dist/index.css"
   },
   "dependencies": {
     "canvas-sketch": "^0.2.0",

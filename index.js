@@ -9,6 +9,15 @@ const set = require('lodash/set')
 const THREE = global.THREE = require('three')
 require('three/examples/js/controls/OrbitControls')
 
+
+/*
+0: "#69d2e7"
+1: "#a7dbd8"
+2: "#e0e4cc"
+3: "#f38630"
+4: "#fa6900"
+*/
+
 const SAVE = process.env.NODE_ENV === 'save'
 
 const settings = {
@@ -19,7 +28,7 @@ const settings = {
   canvas: document.querySelector('#app'),
   ...SAVE && {
     dimensions: [600, 600],
-    fps: 60,
+    fps: 30,
   }
 }
 
