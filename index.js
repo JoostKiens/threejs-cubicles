@@ -92,7 +92,7 @@ const sketch = ({ context, canvas }) => {
     const distance = v.dot(new THREE.Vector3(1, 1, 1)) / 3
 
     mesh.userData = {
-      delay: lerp(0, 1 - cfg.duration, eases.linear(distance)),
+      delay: lerp(0, 1 - cfg.duration, distance),
       delayRandomness: random.value(),
       indexedScale: Math.sin(distance * Math.PI),
       position: v.add(toCenter),
@@ -116,12 +116,12 @@ const sketch = ({ context, canvas }) => {
         const { position, indexedScale, delay, scaleRandomness, delayRandomness } = mesh.userData
         const delayWithRandomness = delay + (delayRandomness * cfg.delayRandomness - cfg.delayRandomness / 2)
         mesh.position.copy(position).multiplyScalar(cfg.gridGutter)
-        const tr = transpose(playhead, delayWithRandomness, cfg.duration)
+        const tr = transpose(eases.sineInOut(playhead), delayWithRandomness, cfg.duration)
         const scale = Math.sin(tr * Math.PI) * cfg.maxPointSize * (scaleRandomness * cfg.scaleRandomness + 1) * (indexedScale * cfg.maxPointIncrease + 0.5) + 0.01
         mesh.scale.set(scale, scale, scale)
       })
 
-      const gridScale = eases.linear(Math.sin(playhead * Math.PI)) * cfg.maxGridScale + 1
+      const gridScale = eases.sineInOut(Math.sin(playhead * Math.PI)) * cfg.maxGridScale + 1
       grid.scale.set(gridScale, gridScale, gridScale)
 
       renderer.render(scene, camera)
