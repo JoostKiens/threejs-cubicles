@@ -6,8 +6,8 @@ module.exports = {
       '0': {
         'maxGridScale': 0.3,
         'gridGutter': 4,
-        'duration': 0.3,
-        'delayRandomness': 0.1,
+        'duration': 0.29,
+        'delayRandomness': 0.09,
         'maxPointIncrease': 0.7,
         'maxPointSize': 6,
         'scaleRandomness': 0.3,
