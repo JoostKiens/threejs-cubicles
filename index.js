@@ -9,19 +9,23 @@ const set = require('lodash/set')
 const THREE = global.THREE = require('three')
 require('three/examples/js/controls/OrbitControls')
 
+const SAVE = process.env.NODE_ENV === 'save'
+
 const settings = {
-  dimensions: [600, 600],
-  fps: 30,
   animate: true,
   context: 'webgl',
   duration: 2.5,
   attributes: { antialias: true },
-  canvas: document.querySelector('#app')
+  canvas: document.querySelector('#app'),
+  ...SAVE && {
+    dimensions: [600, 600],
+    fps: 60,
+  }
 }
 
 function CFG() {
   this.cubesPerSide = 6
-  this.remember = true
+  this.remember = SAVE
   this.gridGutter = 4
   this.duration = 0.3
   this.maxGridScale = 0.3
@@ -39,7 +43,7 @@ const cfg = new CFG()
 
 const sketch = ({ context, canvas }) => {
   const renderer = new THREE.WebGLRenderer({ context })
-  renderer.setClearColor('hsl(0, 0%, 95%)', 1)
+  renderer.setClearColor('hsl(0, 0%, 5%)', 1)
 
   const camera = new THREE.OrthographicCamera()
   const controls = new THREE.OrbitControls(camera, canvas)
@@ -51,8 +55,8 @@ const sketch = ({ context, canvas }) => {
   }
   
   const f1 = gui.addFolder('Grid')
-  f1.add(cfg, 'maxGridScale', 0, 1)
-  f1.add(cfg, 'gridGutter', 0, 60)
+  f1.add(cfg, 'maxGridScale', 0, 4)
+  f1.add(cfg, 'gridGutter', 0, 20)
   const f2 = gui.addFolder('Duration')
   f2.add(cfg, 'duration', 0, 0.4)
   f2.add(cfg, 'delayRandomness', 0, 0.4)
@@ -78,7 +82,7 @@ const sketch = ({ context, canvas }) => {
   const palette = random.pick(palettes)
   const toCenter = new THREE.Vector3(-0.5, -0.5, -0.5)
 
-  window.addEventListener('keyup', () => console.log(palette))
+  SAVE && window.addEventListener('keyup', () => console.log(palette))
 
   function updateCamera(path, val) {
     set(camera, path, val)
