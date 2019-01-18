@@ -46,6 +46,21 @@ module.exports = {
         'cameraY': 6,
         'cameraZ': 6.000000000000001
       }
+    },
+    'Diamond': {
+      '0': {
+        'maxGridScale': 0.3,
+        'gridGutter': 10.897811476822332,
+        'duration': 0.28854041013269,
+        'delayRandomness': 0.1,
+        'maxPointIncrease': 0.7,
+        'maxPointSize': 4.2805445459245215,
+        'scaleRandomness': 0.5779769084956057,
+        'zoom': 0.5403600876626365,
+        'cameraX': 0.000007271114723773944,
+        'cameraY': 10.392304845408065,
+        'cameraZ': -0.000007425017890462061
+      }
     }
   },
   'folders': {

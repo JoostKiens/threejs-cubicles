@@ -14,12 +14,12 @@ const SAVE = process.env.NODE_ENV === 'save'
 const settings = {
   animate: true,
   context: 'webgl',
-  duration: 2.5,
+  duration: 3.5,
   attributes: { antialias: true },
   canvas: document.querySelector('#app'),
   ...SAVE && {
     dimensions: [600, 600],
-    fps: 30,
+    fps: 30
   }
 }
 
