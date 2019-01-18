@@ -5,18 +5,9 @@ const palettes = require('nice-color-palettes')
 const random = require('canvas-sketch-util/random')
 const dat = require('dat.gui')
 const set = require('lodash/set')
-
+const preset = require('./preset');
 const THREE = global.THREE = require('three')
 require('three/examples/js/controls/OrbitControls')
-
-
-/*
-0: "#69d2e7"
-1: "#a7dbd8"
-2: "#e0e4cc"
-3: "#f38630"
-4: "#fa6900"
-*/
 
 const SAVE = process.env.NODE_ENV === 'save'
 
@@ -56,8 +47,12 @@ const sketch = ({ context, canvas }) => {
 
   const camera = new THREE.OrthographicCamera()
   const controls = new THREE.OrbitControls(camera, canvas)
-  const gui = new dat.GUI()
+  const gui = new dat.GUI({ 
+    load: preset,
+    ...!SAVE && { preset: 'overlapping' }
+  })
   gui.closed = true
+  
   if (cfg.remember) {
     gui.useLocalStorage = true
     gui.remember(cfg)
@@ -88,10 +83,10 @@ const sketch = ({ context, canvas }) => {
   const scene = new THREE.Scene()
   const grid = new THREE.Group()
   const box = new THREE.BoxGeometry(0.1, 0.1, 0.1)
-  const palette = random.pick(palettes)
+  const palette = getPalette(window && window.location.search)
   const toCenter = new THREE.Vector3(-0.5, -0.5, -0.5)
 
-  SAVE && window.addEventListener('keyup', () => console.log(palette))
+  window && SAVE && window.addEventListener('keyup', () => console.log(palettes.indexOf(palette), palette))
 
   function updateCamera(path, val) {
     set(camera, path, val)
@@ -199,6 +194,11 @@ const updateConfig = ({ target }, cfg) => {
   cfg.cameraX = target.object.position.x
   cfg.cameraY = target.object.position.y
   cfg.cameraZ = target.object.position.z
+}
+
+const getPalette = (search) => {
+  const index = new URLSearchParams(window.location.search).get('palette')
+  return palettes[index] ? palettes[index] : random.pick(palettes)
 }
 
 canvasSketch(sketch, settings)
