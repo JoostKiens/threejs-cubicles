@@ -20,10 +20,6 @@
     "three": "^0.100.0"
   },
   "devDependencies": {
-    "eslint": "^5.12.0",
-    "pre-commit": "^1.2.2"
-  },
-  "pre-commit": [
-    "dist"
-  ]
+    "eslint": "^5.12.0"
+  }
 }
