@@ -6,8 +6,8 @@
   "author": "Joost Kiens",
   "license": "MIT",
   "scripts": {
-    "start": "canvas-sketch index.js --html=index.html",
-    "start-for-save": "NODE_ENV=save canvas-sketch index.js --output=output/ --html=index.html",
+    "start": "canvas-sketch index.js --hot --html=index.html",
+    "start-for-save": "NODE_ENV=save canvas-sketch index.js --hot --output=output/ --html=index.html",
     "dist": "canvas-sketch index.js --html=index.html --dir docs --build --no-compress; cp index.css docs/index.css",
     "dist-for-save": "NODE_ENV=save canvas-sketch index.js --html=index.html --dir docs --build --no-compress; cp index.css docs/index.css"
   },
