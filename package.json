@@ -18,7 +18,8 @@
     "eases": "^1.0.8",
     "lodash": "^4.17.11",
     "nice-color-palettes": "^2.0.0",
-    "three": "^0.100.0"
+    "three": "^0.100.0",
+    "three-bas": "^2.8.1"
   },
   "devDependencies": {
     "eslint": "^5.12.0"
