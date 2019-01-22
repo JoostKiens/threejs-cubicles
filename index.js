@@ -98,15 +98,13 @@ const sketch = ({ context, canvas }) => {
     const color = random.pick(palette)
     const mesh = new THREE.Mesh(box, new THREE.MeshStandardMaterial({ color }))
     const distance = v.dot(new THREE.Vector3(1, 1, 1)) / 3
+    const delay = lerp(0, 1 - cfg.duration, distance) + (random.value() * cfg.delayRandomness - cfg.delayRandomness / 2)
+    const indexedScale = Math.sin(distance * Math.PI)
+    const scaleOffset = cfg.maxPointSize * (random.value() * cfg.scaleRandomness + 1) * (indexedScale * cfg.maxPointIncrease + 0.5)
 
-    mesh.userData = {
-      delay: lerp(0, 1 - cfg.duration, distance),
-      delayRandomness: random.value(),
-      indexedScale: Math.sin(distance * Math.PI),
-      position: v.add(toCenter),
-      scaleRandomness: random.value()
-    }
+    mesh.userData = { delay, scaleOffset }
 
+    mesh.position.copy(v).add(toCenter).multiplyScalar(cfg.gridGutter)
     grid.add(mesh)
   })
 
@@ -121,11 +119,8 @@ const sketch = ({ context, canvas }) => {
   return {
     render({ playhead }) {
       grid.children.forEach((mesh) => {
-        const { position, indexedScale, delay, scaleRandomness, delayRandomness } = mesh.userData
-        const delayWithRandomness = delay + (delayRandomness * cfg.delayRandomness - cfg.delayRandomness / 2)
-        mesh.position.copy(position).multiplyScalar(cfg.gridGutter)
-        const tr = transpose(eases.sineInOut(playhead), delayWithRandomness, cfg.duration)
-        const scale = Math.sin(tr * Math.PI) * cfg.maxPointSize * (scaleRandomness * cfg.scaleRandomness + 1) * (indexedScale * cfg.maxPointIncrease + 0.5) + 0.01
+        const { delay, scaleOffset } = mesh.userData
+        const scale = getScale(playhead, scaleOffset, delay, cfg.duration)
         mesh.scale.set(scale, scale, scale)
       })
 
@@ -149,7 +144,6 @@ const handleResize = (renderer, camera, cfg, { pixelRatio, viewportWidth, viewpo
   renderer.setPixelRatio(pixelRatio)
   renderer.setSize(viewportWidth, viewportHeight)
   const aspect = viewportWidth / viewportHeight
-
   const zoom = 6
 
   camera.left = -zoom * aspect
@@ -182,11 +176,16 @@ const createUVWGrid = ([cx, cy, cz]) => {
 
 const times = (n) => Array.from(new Array(n)).map((_, i) => i)
 
+const getScale = (t, scaleOffset, delay, duration) => {
+  const tr = transpose(eases.sineInOut(t), delay, duration)
+  return tr * scaleOffset + 0.01
+}
+
 const transpose = (t, delay, duration) => {
   if (t - delay <= 0) return 0
   if (t >= delay + duration) return 0
 
-  return (t - delay) / duration
+  return Math.sin(((t - delay) / duration) * Math.PI)
 }
 
 const updateConfig = ({ target }, cfg) => {
